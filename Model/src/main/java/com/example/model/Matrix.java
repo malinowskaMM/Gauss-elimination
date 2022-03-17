@@ -34,4 +34,23 @@ public class Matrix {
         }
         return matrix;
     }
+
+    public double[][] extendedMatrix(double[][] matrixA, double[][] matrixB ) {
+        int rowsCounter = matrixA.length;
+        int colsCounter = matrixA[0].length + 1;
+        double[][] exteded = new double[rowsCounter][colsCounter];
+        if (matrixA.length == matrixB.length) {
+            for(int i = 0; i < rowsCounter; i++) {
+                for(int j = 0; j < colsCounter; j++) {
+                    if(j == colsCounter-1) {
+                        exteded[i][j] = matrixB[i][0];
+                    } else {
+                        exteded[i][j] = matrixA[i][j];
+                    }
+                }
+            }
+        }
+        return exteded;
+    }
+
 }

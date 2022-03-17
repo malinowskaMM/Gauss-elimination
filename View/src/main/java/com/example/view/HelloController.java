@@ -1,20 +1,18 @@
 package com.example.view;
 
 import com.example.model.Matrix;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class HelloController {
     Matrix matrix = new Matrix();
     double[][] matrixA;
     double[][] matrixB;
-
+    double[][] matrixAB;
 
     private void openWarningDialog(String text) {
         Dialog<String> dialog = new Dialog<>();
@@ -34,6 +32,8 @@ public class HelloController {
             File selectedFile = jfc.getSelectedFile();
             matrixA = matrix.initMatrixFromTxtFile(selectedFile);
         }
+        System.out.println(matrixA.length);
+        System.out.println(matrixA[0].length);
         JFileChooser jfc2 = new JFileChooser();
         openWarningDialog("Wybierz plik z macierzą rozwiązań");
         int returnValue2 = jfc2.showOpenDialog(null);
@@ -41,7 +41,9 @@ public class HelloController {
             File selectedFile = jfc2.getSelectedFile();
             matrixB = matrix.initMatrixFromTxtFile(selectedFile);
         }
-
+        System.out.println(matrixB.length);
+        matrixAB=matrix.extendedMatrix(matrixA,matrixB);
+        System.out.println(Arrays.deepToString(matrixAB));
     }
 
 }
