@@ -53,4 +53,25 @@ public class Matrix {
         return exteded;
     }
 
+    //zeby dostac macierz trojkatna gorna
+    public double[][] elimination(double[][] extended, double epsilon, double[][] matrixB) {
+        double diff;
+        int rowsCounter = extended.length;
+        int colsCounter = extended[0].length;
+        for(int i = 1; i < rowsCounter-1; i++) {
+            for (int j = i + 1; j < colsCounter - 1; j++) {
+                if( Math.abs(extended[i][i])< epsilon) {
+                    break;
+                }
+                diff = - extended[j][i] / extended[i][i];
+            }
+        }
+        return extended;
+    }
+
+
+
+
+
+
 }

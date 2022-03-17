@@ -44,6 +44,7 @@ public class HelloController {
         System.out.println(matrixB.length);
         matrixAB=matrix.extendedMatrix(matrixA,matrixB);
         System.out.println(Arrays.deepToString(matrixAB));
+        System.out.println(matrix.elimination(matrixAB,1.0,matrixB));
     }
 
 }
