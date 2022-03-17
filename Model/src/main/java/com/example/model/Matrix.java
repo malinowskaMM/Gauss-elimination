@@ -11,7 +11,7 @@ public class Matrix {
     }
 
 
-    public void initMatrixFromTxtFile(File file) throws IOException {
+    public double[][] initMatrixFromTxtFile(File file) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         String content;
         String[] numbers = null;
@@ -32,6 +32,6 @@ public class Matrix {
                 listCursor += 1;
             }
         }
-        System.out.println(Arrays.deepToString(matrix));
+        return matrix;
     }
 }
