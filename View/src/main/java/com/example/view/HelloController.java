@@ -14,6 +14,11 @@ public class HelloController {
     double[][] matrixB;
     double[][] matrixAB;
 
+    @FXML
+    TextField precisionInput;
+    @FXML
+    TextField iterationNumInput;
+
     private void openWarningDialog(String text) {
         Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Uwaga");
@@ -21,6 +26,18 @@ public class HelloController {
         dialog.setContentText(text);
         dialog.getDialogPane().getButtonTypes().add(type);
         dialog.showAndWait();
+    }
+
+    @FXML
+    protected void onPrecisionRadioButtonSelected() {
+        precisionInput.setDisable(false);
+        iterationNumInput.setDisable(true);
+    }
+
+    @FXML
+    protected void onIterationRadioButtonSelected() {
+        precisionInput.setDisable(true);
+        iterationNumInput.setDisable(false);
     }
 
     @FXML

@@ -20,11 +20,15 @@
               </rowConstraints>
                <children>
                   <Label text="Ilość równań" />
-                  <RadioButton fx:id="iterationRadioButton" mnemonicParsing="false" text="Ilość iteracji" GridPane.rowIndex="1" />
-                  <RadioButton fx:id="precisionRadioButton" mnemonicParsing="false" text="Dokładność" GridPane.rowIndex="2" />
+                  <RadioButton fx:id="iterationRadioButton" mnemonicParsing="false" onAction="#onIterationRadioButtonSelected" text="Ilość iteracji" GridPane.rowIndex="1">
+                      <toggleGroup>
+                          <ToggleGroup fx:id="method" />
+                      </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="precisionRadioButton" mnemonicParsing="false" onAction="#onPrecisionRadioButtonSelected" text="Dokładność" toggleGroup="$method" GridPane.rowIndex="2" />
                   <TextField fx:id="numberOfEquations" promptText="max 10" GridPane.columnIndex="1" />
-                  <TextField fx:id="numberOfIterations" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="precision" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="iterationNumInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="precisionInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </children>
