@@ -53,6 +53,44 @@ public class Matrix {
         return exteded;
     }
 
+    //cofactor = number/matrix you get when you remove the column and row of a designated element in a matrix
+    // p - row of removed number
+    // q - col of removed number
+    public double[][] getCofactor(double[][] matrix, int p, int q) {
+        int i =0;
+        int j =0;
+        int rowsCounter = matrix.length;
+        int colsCounter = matrix[0].length;
+        double[][] temp = new double[rowsCounter][colsCounter];
+        for(int row = 0; row < rowsCounter; row++) {
+            for(int col = 0; col < colsCounter; col++) {
+                if(row != p && col != q) {
+                    temp[i][j++] = matrix[row][col];
+                    if (j == colsCounter -1) {
+                        j=0;
+                        i++;
+                    }
+                }
+            }
+        }
+        return temp;
+    }
+
+    public double determinantMatrix(double[][] matrix , int dimension) {
+        double determiant = 0;
+        if (dimension == 1) {
+            return matrix[0][0];
+        }
+        int sign = 1;
+        for (int i = 0; i < dimension; i++) {
+            determiant += sign * matrix[0][i] * determinantMatrix(getCofactor(matrix, 0, i), dimension-1 );
+            sign = - sign;
+        }
+        return determiant;
+    }
+
+
+
     //zeby dostac macierz trojkatna gorna
     public double[][] elimination(double[][] extended, double epsilon, double[][] matrixB) {
         double diff;

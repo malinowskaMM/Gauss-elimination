@@ -51,6 +51,7 @@ public class HelloController {
         }
         System.out.println(matrixA.length);
         System.out.println(matrixA[0].length);
+        System.out.println(matrix.determinantMatrix(matrixA,matrixA.length));
         JFileChooser jfc2 = new JFileChooser();
         openWarningDialog("Wybierz plik z macierzą rozwiązań");
         int returnValue2 = jfc2.showOpenDialog(null);
