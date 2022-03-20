@@ -3,6 +3,7 @@ package com.example.view;
 import com.example.model.Matrix;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.FilterOutputStream;
@@ -19,6 +20,15 @@ public class HelloController {
     TextField precisionInput;
     @FXML
     TextField iterationNumInput;
+
+    private void printResultInWarningDialog(double[] result) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Rozwiązaniem układu równań są \n");
+        for (int i = 0; i < result.length; i++) {
+            stringBuilder.append("x"+i+" = "+result[i]+"\n");
+        }
+        openWarningDialog(stringBuilder.toString());
+    }
 
     private void openWarningDialog(String text) {
         Dialog<String> dialog = new Dialog<>();
@@ -50,7 +60,6 @@ public class HelloController {
             File selectedFile = jfc.getSelectedFile();
             matrixA = matrix.initMatrixFromTxtFile(selectedFile);
         }
-        System.out.println(matrix.determinantMatrix(matrixA));
         JFileChooser jfc2 = new JFileChooser();
         openWarningDialog("Wybierz plik z macierzą rozwiązań");
         int returnValue2 = jfc2.showOpenDialog(null);
@@ -58,9 +67,9 @@ public class HelloController {
             File selectedFile = jfc2.getSelectedFile();
             matrixB = matrix.initMatrixFromTxtFile(selectedFile);
         }
-        matrixAB=matrix.extendedMatrix(matrixA,matrixB);
-        System.out.println(Arrays.deepToString(matrix.elimination(matrixAB)));
-        System.out.println(Arrays.toString(matrix.solution(matrix.elimination(matrixAB))));
+        matrixAB = matrix.extendedMatrix(matrixA, matrixB);
+        System.out.println(Arrays.toString(matrix.elimination(matrixAB, Double.MIN_NORMAL)));
+        printResultInWarningDialog(matrix.elimination(matrixAB, Double.MIN_NORMAL));
     }
 
 }
