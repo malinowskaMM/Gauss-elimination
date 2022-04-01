@@ -57,15 +57,13 @@ public class Matrix {
     //zeby dostac macierz trojkatna gorna
     public double[] elimination(double[][] extended, double epsilon) {
         int n = extended.length;
-        double[] x = new double[n];
+        double[] x = new double[n]; // tworzymy macierz wyrazow wolnych (rownie dobrze mozna przekazac ja przez patametr)
         for(int iter = 0; iter < n; iter++){
             x[iter] = extended[iter][extended[0].length-1];
         }
-        System.out.println(Arrays.deepToString(extended));
-        for (int i = 0; i < n - 1; i++) {
+        for (int i = 0; i < n - 1; i++) { //proces eliminacji - próbujemy otrzymać macierz trójkątną górną
             for(int j = i+1; j < n; j++) {
-                if( Math.abs(extended[i][i]) < epsilon) {
-                    System.out.println("Wyszedłem 1");
+                if( Math.abs(extended[i][i]) < epsilon) { //epsilon okresla nam jak blisko 0 moze znajdowac sie dzielnik
                     return x;
                 }
                 double m = - extended[j][i]/extended[i][i];
@@ -74,19 +72,18 @@ public class Matrix {
                 }
             }
         }
+        System.out.println(Arrays.deepToString(extended));
         double sum = 0;
         for(int i = n-1; i >= 0; i--) {
             sum = extended[i][n];
             for(int j = n -1; j >= i+1; j--) {
                 sum -= extended[i][j]*x[j];
-                //System.out.println("Wartosc sum: " + sum);
             }
             if( Math.abs(extended[i][i]) < epsilon) {
                 System.out.println("Wyszedłem 2");
                 return x;
             }
             x[i] = sum / extended[i][i];
-            //System.out.println("Wartosc x[i]: " + x[i]);
         }
         return x;
     }
