@@ -60,6 +60,7 @@ public class Matrix {
 
     //zeby dostac macierz trojkatna gorna
     public double[] elimination(double[][] extended, double epsilon) {
+        double determinant = 0;
         int n = extended.length;
         double[] x = new double[n]; // tworzymy macierz wyrazow wolnych (rownie dobrze mozna przekazac ja przez patametr)
         for(int iter = 0; iter < n; iter++){
@@ -76,6 +77,18 @@ public class Matrix {
                 }
             }
         }
+
+        for(int i =0; i< n; i++) {
+            for(int j =0; j<n-1; j++) {
+                if(i == j){
+                    determinant *= extended[i][j];
+                }
+            }
+        }
+        if(determinant == 0) {
+            return null;
+        }
+
         System.out.println(Arrays.deepToString(extended));
         double sum = 0;
         for(int i = n-1; i >= 0; i--) {

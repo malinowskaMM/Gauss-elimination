@@ -105,8 +105,12 @@ public class HelloController {
             }
         }
         matrixAB = matrix.extendedMatrix(matrixA, matrixB);
-        System.out.println(Arrays.toString(matrix.elimination(matrixAB, Double.MIN_NORMAL)));
-        printResultInWarningDialog(matrix.elimination(matrixAB, Double.MIN_NORMAL));
+        double[] result = matrix.elimination(matrixAB, Double.MIN_NORMAL);
+        if(result == null) {
+            openWarningDialog("Układ jest nieoznaczony lub sprzeczny");
+        } else {
+            printResultInWarningDialog(matrix.elimination(matrixAB, Double.MIN_NORMAL));
+        }
         return 0;
     }
 
