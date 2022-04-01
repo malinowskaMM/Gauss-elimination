@@ -14,6 +14,7 @@ public class HelloController {
     int checkNumberOfEquations;
     int numberOfEquations;
     int maxNumberOfEquantions = 10;
+    double eps = 0;
     double[][] matrixA;
     double[][] matrixB;
     double[][] matrixAB;
@@ -22,8 +23,7 @@ public class HelloController {
     TextField numberOfEquationsInput;
     @FXML
     TextField precisionInput;
-    @FXML
-    TextField iterationNumInput;
+
 
     private void printResultInWarningDialog(double[] result) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -43,17 +43,6 @@ public class HelloController {
         dialog.showAndWait();
     }
 
-    @FXML
-    protected void onPrecisionRadioButtonSelected() {
-        precisionInput.setDisable(false);
-        iterationNumInput.setDisable(true);
-    }
-
-    @FXML
-    protected void onIterationRadioButtonSelected() {
-        precisionInput.setDisable(true);
-        iterationNumInput.setDisable(false);
-    }
 
     private boolean setNumberOfEquations() {
         String inputNumber = numberOfEquationsInput.getText();
@@ -77,9 +66,30 @@ public class HelloController {
         }
     }
 
+    private boolean setEps() {
+        String inputNumber = precisionInput.getText();
+        boolean ifDigitInput = true;
+        for(int i = 0; i < inputNumber.length(); i++) {
+            if (!Character.isDigit(inputNumber.charAt(i)) && inputNumber.charAt(i) != '.') {
+                ifDigitInput = false;
+            }
+        }
+        if (ifDigitInput) {
+            eps = Double.parseDouble(precisionInput.getText());
+            return true;
+        } else {
+            openWarningDialog("Podano złą wartosc eps");
+            return false;
+        }
+
+    }
+
     @FXML
     protected int onInputCoefficientButtonClick() throws IOException {
         if (!setNumberOfEquations()) {
+            return -1;
+        }
+        if (!setEps()) {
             return -1;
         }
         JFileChooser jfc = new JFileChooser();
@@ -107,9 +117,13 @@ public class HelloController {
         matrixAB = matrix.extendedMatrix(matrixA, matrixB);
         double[] result = matrix.elimination(matrixAB, Double.MIN_NORMAL);
         if(result == null) {
-            openWarningDialog("Układ jest nieoznaczony lub sprzeczny");
-        } else {
-            printResultInWarningDialog(matrix.elimination(matrixAB, Double.MIN_NORMAL));
+            openWarningDialog("Wyznacznik macierzy jest równy 0. Układ jest sprzeczny");
+        }
+        else if (Arrays.equals(result, new double[matrixAB[0].length])) {
+            openWarningDialog("Wyznacznik macierzy jest równy 0. Układ jest nieoznaczony");
+        }
+        else {
+            printResultInWarningDialog(result);
         }
         return 0;
     }

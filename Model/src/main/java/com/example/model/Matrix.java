@@ -26,8 +26,7 @@ public class Matrix {
         }
         double[][] matrix = new double[rowsCounter][colsCounter];
         int listCursor = 0;
-        if(matrix.length != numberOfEquations)
-        {
+        if (matrix.length != numberOfEquations) {
             return null;
         }
         for (int i = 0; i < rowsCounter; i++) {
@@ -60,43 +59,55 @@ public class Matrix {
 
     //zeby dostac macierz trojkatna gorna
     public double[] elimination(double[][] extended, double epsilon) {
-        double determinant = 0;
+        double determinant = 1;
         int n = extended.length;
         double[] x = new double[n]; // tworzymy macierz wyrazow wolnych (rownie dobrze mozna przekazac ja przez patametr)
-        for(int iter = 0; iter < n; iter++){
-            x[iter] = extended[iter][extended[0].length-1];
+        for (int iter = 0; iter < n; iter++) {
+            x[iter] = extended[iter][extended[0].length - 1];
         }
         for (int i = 0; i < n - 1; i++) { //proces eliminacji - próbujemy otrzymać macierz trójkątną górną
-            for(int j = i+1; j < n; j++) {
-                if( Math.abs(extended[i][i]) < epsilon) { //epsilon okresla nam jak blisko 0 moze znajdowac sie dzielnik
+            for (int j = i + 1; j < n; j++) {
+                if (Math.abs(extended[i][i]) < epsilon) { //epsilon okresla nam jak blisko 0 moze znajdowac sie dzielnik
                     return x;
                 }
-                double m = - extended[j][i]/extended[i][i];
-                for(int k = i; k <= n; k++) {
+                double m = -extended[j][i] / extended[i][i];
+                for (int k = i; k <= n; k++) {
                     extended[j][k] += m * extended[i][k];
                 }
             }
         }
 
-        for(int i =0; i< n; i++) {
-            for(int j =0; j<n-1; j++) {
-                if(i == j){
-                    determinant *= extended[i][j];
+        for (int i = 0; i < n; i++) {
+            if(extended[i][i] < 0.0000000001) {
+                extended[i][i] = 0;
+            }
+            determinant *= extended[i][i];
+
+        }
+        System.out.println(determinant);
+        double[] zeros = new double[n + 1];
+        if (determinant == 0) {
+            for (int i = 0; i < n; i++) {
+                double[] col = new double[n + 1];
+                for (int j = 0; j < n + 1; j++) {
+                    if (col[j] < 0.0000000001)
+                        col[j] = extended[i][j];
+                }
+                if (Arrays.equals(col, zeros)) {
+                    return col;
                 }
             }
-        }
-        if(determinant == 0) {
             return null;
         }
 
         System.out.println(Arrays.deepToString(extended));
-        double sum = 0;
-        for(int i = n-1; i >= 0; i--) {
+        double sum;
+        for (int i = n - 1; i >= 0; i--) {
             sum = extended[i][n];
-            for(int j = n -1; j >= i+1; j--) {
-                sum -= extended[i][j]*x[j];
+            for (int j = n - 1; j >= i + 1; j--) {
+                sum -= extended[i][j] * x[j];
             }
-            if( Math.abs(extended[i][i]) < epsilon) {
+            if (Math.abs(extended[i][i]) < epsilon) {
                 System.out.println("Wyszedłem 2");
                 return x;
             }
