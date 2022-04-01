@@ -105,12 +105,13 @@ public class Matrix {
             for (int i = 0; i < n; i++) {
                 double[] col = new double[n + 1];
                 for (int j = 0; j < n + 1; j++) {
-                    if (col[j] < epsilon && col[j] > -epsilon){
+                    if (extended[i][j] < epsilon && extended[i][j] > -epsilon){
                         col[j] = 0.0;
                     } else {
                         col[j] = extended[i][j];
                     }
                 }
+                System.out.println(Arrays.toString(col));
                 if (Arrays.equals(col, zeros)) {
                     return col;
                 }
