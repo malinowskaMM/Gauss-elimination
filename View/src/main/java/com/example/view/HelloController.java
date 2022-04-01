@@ -9,13 +9,19 @@ import java.io.File;
 import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class HelloController {
     Matrix matrix = new Matrix();
+    int checkNumberOfEquations;
+    int numberOfEquations;
+    int maxNumberOfEquantions = 10;
     double[][] matrixA;
     double[][] matrixB;
     double[][] matrixAB;
 
+    @FXML
+    TextField numberOfEquationsInput;
     @FXML
     TextField precisionInput;
     @FXML
@@ -51,8 +57,33 @@ public class HelloController {
         iterationNumInput.setDisable(false);
     }
 
+    private boolean setNumberOfEquations() {
+        String inputNumber = numberOfEquationsInput.getText();
+        boolean ifDigitInput = true;
+        for(int i = 0; i < inputNumber.length(); i++) {
+            if (!Character.isDigit(inputNumber.charAt(i))) {
+                ifDigitInput = false;
+            }
+        }
+        if (ifDigitInput) {
+            checkNumberOfEquations = Integer.parseInt(inputNumber);
+            if (checkNumberOfEquations > maxNumberOfEquantions) {
+                openWarningDialog("Prosze zmniejszyć ilość (max 10)");
+                return false;
+            }
+            numberOfEquations = checkNumberOfEquations;
+            return true;
+        } else {
+            openWarningDialog("Podano złą ilość równań");
+            return false;
+        }
+    }
+
     @FXML
-    protected void onInputCoefficientButtonClick() throws IOException {
+    protected int onInputCoefficientButtonClick() throws IOException {
+        if (!setNumberOfEquations()) {
+            return -1;
+        }
         JFileChooser jfc = new JFileChooser();
         openWarningDialog("Wybierz plik z macierzą współczynników");
         int returnValue = jfc.showOpenDialog(null);
@@ -70,6 +101,7 @@ public class HelloController {
         matrixAB = matrix.extendedMatrix(matrixA, matrixB);
         System.out.println(Arrays.toString(matrix.elimination(matrixAB, Double.MIN_NORMAL)));
         printResultInWarningDialog(matrix.elimination(matrixAB, Double.MIN_NORMAL));
+        return 0;
     }
 
 }
