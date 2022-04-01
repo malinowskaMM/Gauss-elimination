@@ -11,7 +11,7 @@ public class Matrix {
     }
 
 
-    public double[][] initMatrixFromTxtFile(File file) throws IOException {
+    public double[][] initMatrixFromTxtFile(File file, int numberOfEquations) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         String content;
         String[] numbers = null;
@@ -26,6 +26,10 @@ public class Matrix {
         }
         double[][] matrix = new double[rowsCounter][colsCounter];
         int listCursor = 0;
+        if(matrix.length != numberOfEquations)
+        {
+            return null;
+        }
         for (int i = 0; i < rowsCounter; i++) {
             for (int j = 0; j < colsCounter; j++) {
                 matrix[i][j] = Double.parseDouble(numberList.get(listCursor));

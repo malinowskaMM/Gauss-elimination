@@ -6,10 +6,8 @@ import javafx.scene.control.*;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Objects;
 
 public class HelloController {
     Matrix matrix = new Matrix();
@@ -89,14 +87,22 @@ public class HelloController {
         int returnValue = jfc.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
-            matrixA = matrix.initMatrixFromTxtFile(selectedFile);
+            matrixA = matrix.initMatrixFromTxtFile(selectedFile, numberOfEquations);
+            if(matrixA == null) {
+                openWarningDialog("Podano złą ilość równań wzgledem wczytanego pliku");
+                return  -1;
+            }
         }
         JFileChooser jfc2 = new JFileChooser();
         openWarningDialog("Wybierz plik z macierzą rozwiązań");
         int returnValue2 = jfc2.showOpenDialog(null);
         if (returnValue2 == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc2.getSelectedFile();
-            matrixB = matrix.initMatrixFromTxtFile(selectedFile);
+            matrixB = matrix.initMatrixFromTxtFile(selectedFile, numberOfEquations);
+            if(matrixB == null) {
+                openWarningDialog("Podano złą ilość równań wzgledem wczytanego pliku");
+                return  -1;
+            }
         }
         matrixAB = matrix.extendedMatrix(matrixA, matrixB);
         System.out.println(Arrays.toString(matrix.elimination(matrixAB, Double.MIN_NORMAL)));
