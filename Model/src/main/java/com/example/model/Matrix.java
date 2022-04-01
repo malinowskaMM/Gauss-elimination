@@ -111,7 +111,6 @@ public class Matrix {
                         col[j] = extended[i][j];
                     }
                 }
-                System.out.println(Arrays.toString(col));
                 if (Arrays.equals(col, zeros)) {
                     return col;
                 }
