@@ -115,7 +115,7 @@ public class HelloController {
             }
         }
         matrixAB = matrix.extendedMatrix(matrixA, matrixB);
-        double[] result = matrix.elimination(matrixAB, Double.MIN_NORMAL);
+        double[] result = matrix.elimination(matrixAB, eps);
         if(result == null) {
             openWarningDialog("Wyznacznik macierzy jest równy 0. Układ jest sprzeczny");
         }

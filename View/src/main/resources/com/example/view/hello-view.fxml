@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="213.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.view.HelloController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="213.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.view.HelloController">
    <children>
       <AnchorPane layoutY="-2.0" prefHeight="219.0" prefWidth="490.0">
          <children>
             <Button fx:id="inputCoefficientButton" layoutX="264.0" layoutY="156.0" mnemonicParsing="false" onAction="#onInputCoefficientButtonClick" text="Wczytaj współczynniki układu z pliku" />
-            <GridPane layoutX="45.0" layoutY="40.0">
+            <GridPane layoutX="45.0" layoutY="40.0" prefHeight="91.0" prefWidth="233.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="83.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="10.0" prefWidth="151.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -27,7 +21,7 @@
                <children>
                   <Label text="Ilość równań" />
                   <TextField fx:id="numberOfEquationsInput" promptText="max 10" GridPane.columnIndex="1" />
-                  <TextField fx:id="precisionInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="precisionInput" prefHeight="26.0" prefWidth="153.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label layoutX="10.0" layoutY="16.0" text="Ilość równań" />
                   <Label text="Dokładność" GridPane.rowIndex="1" />
                </children>
