@@ -10,7 +10,7 @@ public class Matrix {
         double[][] matrixA;
     }
 
-
+    //wczytuje z pliczków
     public double[][] initMatrixFromTxtFile(File file, int numberOfEquations) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         String content;
@@ -38,6 +38,8 @@ public class Matrix {
         return matrix;
     }
 
+
+    //macierz wpsołczynnika + macierz wyrazów wolnych
     public double[][] extendedMatrix(double[][] matrixA, double[][] matrixB) {
         int rowsCounter = matrixA.length;
         int colsCounter = matrixA[0].length + 1;
@@ -72,6 +74,7 @@ public class Matrix {
 
                 for(int j = i+1; j < n; j++) {
                     if (Math.abs(extended[i][i]) < epsilon) {
+                        //zamiana wierszy czyt. sprawko (zero mnie sie trafiło na przekatnej - a jak tu dzielić przez zero cholero?)
                         for(int k = 0; k < n+1; k++) {
                             temp = extended[i][k];
                             extended[i][k] = extended[j][k];
@@ -82,7 +85,7 @@ public class Matrix {
                 }
 
             }
-            //proces eliminacji - próbujemy otrzymać macierz trójkątną górną
+            //proces eliminacji - próbujemy otrzymać macierz trójkątną górną i sie nawet udaje
             for (int j = i + 1; j < n; j++) {
                 double m = (-1) * (extended[j][i] / extended[i][i]);
                 for (int k = i; k <= n; k++) {
@@ -93,13 +96,16 @@ public class Matrix {
         }
 
 
-
+        //w tablicy nie zawsze tam wychodziło równe zero, tylko cos bliskiego no i se rzutuje na zero jak bedzie w przedziale [-eps, eps]
         for (int i = 0; i < n; i++) {
             if(extended[i][i] < epsilon && extended[i][i] > -epsilon) {
                 extended[i][i] = 0;
             }
+            //tu kalukuje tereminant bo jak bedzie 0 to bedzie nieoznaczony albo sprzeczny
             determinant *= extended[i][i];
         }
+
+
         double[] zeros = new double[n + 1];
         if (determinant == 0) {
             for (int i = 0; i < n; i++) {
@@ -112,20 +118,20 @@ public class Matrix {
                     }
                 }
                 if (Arrays.equals(col, zeros)) {
-                    return col;
+                    return col; //tablice zer sobie zwracam jak jest np. 0 + 0 + 0 = 0
                 }
             }
-            return null;
+            return null; //null zwracam jak jest sprzeczy czyli mamy np. 0 + 0 + 0 = 6
         }
 
-
+        //procesos odwrotny do eliminacji bom chce wyliczyć iksy
         double sum;
         for (int i = n - 1; i >= 0; i--) {
             sum = extended[i][n];
             for (int j = n - 1; j >= i + 1; j--) {
                 sum -= extended[i][j] * x[j];
             }
-            if (Math.abs(extended[i][i]) < epsilon) {
+            if (Math.abs(extended[i][i]) < epsilon) { //o znowu sie trafiło zero
                 return x;
             }
             x[i] = sum / extended[i][i];
